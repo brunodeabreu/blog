@@ -4,10 +4,8 @@ title: About Me
 permalink: /about/
 ---
 
-This is where you put the contents of your *About* page. Like all your pages, it's in [Markdown](https://guides.github.com/features/mastering-markdown/) format.
-
-This website is powered by **[fastpages](https://github.com/fastai/fastpages)** [^1].
-
-
-
-[^1]:a blogging platform that natively supports Jupyter notebooks in addition to other formats.
+Meu nome é Bruno sou DBA especializado em Db2 nas plataformas Unix e Linux, estudante de estatística, ciência de dados e inteligência artificial, o principal objetivo deste blog é compartilhar notas e cursos e jupyter notebooks de projetos.
+      
+Me formei em ciência da computação pela Universidade Fumec em 2007,  em 2008 iniciei minha tragetória na IBM Brasil atuando como DBA Db2 para clientes em todo o mundo.
+      
+Em 2016 comecei a estudar sobre Ciência de dados, completei o programa de Pós-Graduação da PUC-MG em Big Data e Ciência de Dados em 2019 e desde então me dedico a estudar sobre machine learning, deep learning, inteligência artificial através de diversas plataformas como Coursera, EdX, Data Science Academy e Datacamp.
