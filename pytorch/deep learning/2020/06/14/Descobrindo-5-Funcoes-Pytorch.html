@@ -1,0 +1,2650 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Descobrindo 5 funções no Pytorch | Bruno de Abreu Machado</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Descobrindo 5 funções no Pytorch" />
+<meta name="author" content="Bruno de Abreu Machado" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Recentimente iniciei um curso de Deep Learning pela oferecido pela @freeCodeCamp junto com @JovianML apresentado pelo @aakashns um brilhante instrutor, são seis semanas de curso Zero to GANS. Neste primeiro artigo exploro 5 funções que não conhecia no Pytorch, criando exemplos de aplicações utilizando cada função." />
+<meta property="og:description" content="Recentimente iniciei um curso de Deep Learning pela oferecido pela @freeCodeCamp junto com @JovianML apresentado pelo @aakashns um brilhante instrutor, são seis semanas de curso Zero to GANS. Neste primeiro artigo exploro 5 funções que não conhecia no Pytorch, criando exemplos de aplicações utilizando cada função." />
+<link rel="canonical" href="https://brunodeabreu.github.io/blog/pytorch/deep%20learning/2020/06/14/Descobrindo-5-Funcoes-Pytorch.html" />
+<meta property="og:url" content="https://brunodeabreu.github.io/blog/pytorch/deep%20learning/2020/06/14/Descobrindo-5-Funcoes-Pytorch.html" />
+<meta property="og:site_name" content="Bruno de Abreu Machado" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-06-14T00:00:00-05:00" />
+<script type="application/ld+json">
+{"author":{"@type":"Person","name":"Bruno de Abreu Machado"},"description":"Recentimente iniciei um curso de Deep Learning pela oferecido pela @freeCodeCamp junto com @JovianML apresentado pelo @aakashns um brilhante instrutor, são seis semanas de curso Zero to GANS. Neste primeiro artigo exploro 5 funções que não conhecia no Pytorch, criando exemplos de aplicações utilizando cada função.","@type":"BlogPosting","headline":"Descobrindo 5 funções no Pytorch","dateModified":"2020-06-14T00:00:00-05:00","datePublished":"2020-06-14T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://brunodeabreu.github.io/blog/pytorch/deep%20learning/2020/06/14/Descobrindo-5-Funcoes-Pytorch.html"},"url":"https://brunodeabreu.github.io/blog/pytorch/deep%20learning/2020/06/14/Descobrindo-5-Funcoes-Pytorch.html","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://brunodeabreu.github.io/blog/feed.xml" title="Bruno de Abreu Machado" /><link rel="shortcut icon" type="image/x-icon" href="/blog/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Descobrindo 5 funções no Pytorch | Bruno de Abreu Machado</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Descobrindo 5 funções no Pytorch" />
+<meta name="author" content="Bruno de Abreu Machado" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Recentimente iniciei um curso de Deep Learning pela oferecido pela @freeCodeCamp junto com @JovianML apresentado pelo @aakashns um brilhante instrutor, são seis semanas de curso Zero to GANS. Neste primeiro artigo exploro 5 funções que não conhecia no Pytorch, criando exemplos de aplicações utilizando cada função." />
+<meta property="og:description" content="Recentimente iniciei um curso de Deep Learning pela oferecido pela @freeCodeCamp junto com @JovianML apresentado pelo @aakashns um brilhante instrutor, são seis semanas de curso Zero to GANS. Neste primeiro artigo exploro 5 funções que não conhecia no Pytorch, criando exemplos de aplicações utilizando cada função." />
+<link rel="canonical" href="https://brunodeabreu.github.io/blog/pytorch/deep%20learning/2020/06/14/Descobrindo-5-Funcoes-Pytorch.html" />
+<meta property="og:url" content="https://brunodeabreu.github.io/blog/pytorch/deep%20learning/2020/06/14/Descobrindo-5-Funcoes-Pytorch.html" />
+<meta property="og:site_name" content="Bruno de Abreu Machado" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-06-14T00:00:00-05:00" />
+<script type="application/ld+json">
+{"author":{"@type":"Person","name":"Bruno de Abreu Machado"},"description":"Recentimente iniciei um curso de Deep Learning pela oferecido pela @freeCodeCamp junto com @JovianML apresentado pelo @aakashns um brilhante instrutor, são seis semanas de curso Zero to GANS. Neste primeiro artigo exploro 5 funções que não conhecia no Pytorch, criando exemplos de aplicações utilizando cada função.","@type":"BlogPosting","headline":"Descobrindo 5 funções no Pytorch","dateModified":"2020-06-14T00:00:00-05:00","datePublished":"2020-06-14T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://brunodeabreu.github.io/blog/pytorch/deep%20learning/2020/06/14/Descobrindo-5-Funcoes-Pytorch.html"},"url":"https://brunodeabreu.github.io/blog/pytorch/deep%20learning/2020/06/14/Descobrindo-5-Funcoes-Pytorch.html","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="https://brunodeabreu.github.io/blog/feed.xml" title="Bruno de Abreu Machado" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head><body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/blog/">Bruno de Abreu Machado</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/blog/about/">About Me</a><a class="page-link" href="/blog/search/">Search</a><a class="page-link" href="/blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Descobrindo 5 funções no Pytorch</h1><p class="page-description"> Recentimente iniciei um curso de Deep Learning pela oferecido pela @freeCodeCamp junto com @JovianML apresentado pelo @aakashns um brilhante instrutor, são seis semanas de curso Zero to GANS. Neste primeiro artigo exploro 5 funções que não conhecia no Pytorch, criando exemplos de aplicações utilizando cada função.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-06-14T00:00:00-05:00" itemprop="datePublished">
+        Jun 14, 2020
+      </time>• 
+          <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+            <span class="p-author h-card" itemprop="name">Bruno de Abreu Machado</span></span>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      15 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/blog/categories/#pytorch">pytorch</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#deep learning">deep learning</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-wrap flex-justify-end">
+          <div class="px-2">
+
+    <a href="https://github.com/brunodeabreu/blog/tree/master/_notebooks/2020-06-14-Descobrindo -5-Funcoes-Pytorch.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/blog/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/brunodeabreu/blog/master?filepath=_notebooks%2F2020-06-14-Descobrindo+-5-Funcoes-Pytorch.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/blog/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/brunodeabreu/blog/blob/master/_notebooks/2020-06-14-Descobrindo -5-Funcoes-Pytorch.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/blog/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#Funções-estudadas-neste-notebook">Funções estudadas neste notebook </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Imports">Imports </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#Primeira-função---torch.chain_matmul">Primeira função - torch.chain_matmul </a></li>
+<li class="toc-entry toc-h2"><a href="#Segunda-função---torch.cumprod">Segunda função - torch.cumprod </a></li>
+<li class="toc-entry toc-h2"><a href="#Terceira-função---torch.det">Terceira função - torch.det </a></li>
+<li class="toc-entry toc-h2"><a href="#Quarta-função---torch.flatten">Quarta função - torch.flatten </a></li>
+<li class="toc-entry toc-h2"><a href="#Quinta-função----torch.lu">Quinta função  - torch.lu </a></li>
+<li class="toc-entry toc-h2"><a href="#Conclusão">Conclusão </a></li>
+<li class="toc-entry toc-h2"><a href="#Reference-Links">Reference Links </a></li>
+<li class="toc-entry toc-h2"><a href="#Video-aula-1---Zero-To-Gans">Video aula 1 - Zero To Gans </a></li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2020-06-14-Descobrindo -5-Funcoes-Pytorch.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="https://miro.medium.com/max/1000/1*FCArwuy8wAglYUXp04SN7g.png" alt=""></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Funções-estudadas-neste-notebook">
+<a class="anchor" href="#Fun%C3%A7%C3%B5es-estudadas-neste-notebook" aria-hidden="true"><span class="octicon octicon-link"></span></a>Funções estudadas neste notebook<a class="anchor-link" href="#Fun%C3%A7%C3%B5es-estudadas-neste-notebook"> </a>
+</h2>
+<ul>
+<li>torch.chain_matmul</li>
+<li>torch.cumprod</li>
+<li>torch.det</li>
+<li>torch.flatten</li>
+<li>torch.lu</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Imports">
+<a class="anchor" href="#Imports" aria-hidden="true"><span class="octicon octicon-link"></span></a>Imports<a class="anchor-link" href="#Imports"> </a>
+</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Como neste notebook vou explorar 5 funções do pytorch nesta sessão de <strong>Imports</strong> foi importado somente a lib <code>torch</code></p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<span class="c1"># Import torch and other required modules</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Para descobrir novas funções utilizei o comando <code>dir(&lt;lib&gt;)</code> que listou todas as funções e o comando <code>help(torch.&lt;func&gt;)</code> para conhecer mais sobre ela.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Temos : '</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nb">dir</span><span class="p">(</span><span class="n">torch</span><span class="p">)))</span> <span class="o">+</span> <span class="s1">' funções para explorar'</span><span class="p">)</span>
+<span class="nb">dir</span><span class="p">(</span><span class="n">torch</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Temos : 646 funções para explorar
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>['AVG',
+ 'AggregationType',
+ 'Argument',
+ 'ArgumentSpec',
+ 'Block',
+ 'BoolStorage',
+ 'BoolTensor',
+ 'BoolType',
+ 'ByteStorage',
+ 'ByteTensor',
+ 'CharStorage',
+ 'CharTensor',
+ 'Code',
+ 'CompilationUnit',
+ 'CompleteArgumentSpec',
+ 'CudaBoolStorageBase',
+ 'CudaByteStorageBase',
+ 'CudaCharStorageBase',
+ 'CudaDoubleStorageBase',
+ 'CudaFloatStorageBase',
+ 'CudaHalfStorageBase',
+ 'CudaIntStorageBase',
+ 'CudaLongStorageBase',
+ 'CudaShortStorageBase',
+ 'DictType',
+ 'DoubleStorage',
+ 'DoubleTensor',
+ 'ExecutionPlanState',
+ 'ExtraFilesMap',
+ 'FatalError',
+ 'FileCheck',
+ 'FloatStorage',
+ 'FloatTensor',
+ 'FloatType',
+ 'Function',
+ 'FunctionSchema',
+ 'Future',
+ 'Generator',
+ 'Gradient',
+ 'Graph',
+ 'GraphExecutorState',
+ 'HalfStorage',
+ 'HalfStorageBase',
+ 'HalfTensor',
+ 'IODescriptor',
+ 'IntStorage',
+ 'IntTensor',
+ 'IntType',
+ 'JITException',
+ 'ListType',
+ 'LockingLogger',
+ 'LoggerBase',
+ 'LongStorage',
+ 'LongTensor',
+ 'Node',
+ 'NoopLogger',
+ 'NumberType',
+ 'OptionalType',
+ 'PyTorchFileReader',
+ 'PyTorchFileWriter',
+ 'SUM',
+ 'ScriptMethod',
+ 'ScriptModule',
+ 'ShortStorage',
+ 'ShortTensor',
+ 'Size',
+ 'Storage',
+ 'StringType',
+ 'Tensor',
+ 'TensorType',
+ 'TracingState',
+ 'TupleType',
+ 'Type',
+ 'Use',
+ 'Value',
+ '_C',
+ '_StorageBase',
+ '__all__',
+ '__builtins__',
+ '__cached__',
+ '__config__',
+ '__doc__',
+ '__file__',
+ '__loader__',
+ '__name__',
+ '__package__',
+ '__path__',
+ '__spec__',
+ '__version__',
+ '_adaptive_avg_pool2d',
+ '_baddbmm_mkl_',
+ '_batch_norm_impl_index',
+ '_cast_Byte',
+ '_cast_Char',
+ '_cast_Double',
+ '_cast_Float',
+ '_cast_Half',
+ '_cast_Int',
+ '_cast_Long',
+ '_cast_Short',
+ '_convolution',
+ '_convolution_nogroup',
+ '_copy_same_type_',
+ '_ctc_loss',
+ '_cudnn_ctc_loss',
+ '_cudnn_init_dropout_state',
+ '_cudnn_rnn',
+ '_cudnn_rnn_flatten_weight',
+ '_cufft_clear_plan_cache',
+ '_cufft_get_plan_cache_max_size',
+ '_cufft_get_plan_cache_size',
+ '_cufft_set_plan_cache_max_size',
+ '_debug_has_internal_overlap',
+ '_dim_arange',
+ '_dirichlet_grad',
+ '_embedding_bag',
+ '_empty_affine_quantized',
+ '_fft_with_size',
+ '_fused_dropout',
+ '_import_dotted_name',
+ '_jit_internal',
+ '_log_softmax',
+ '_log_softmax_backward_data',
+ '_lu_with_info',
+ '_masked_scale',
+ '_mkldnn',
+ '_multinomial_alias_draw',
+ '_multinomial_alias_setup',
+ '_nnpack_available',
+ '_nnpack_spatial_convolution',
+ '_np',
+ '_ops',
+ '_pack_padded_sequence',
+ '_pad_packed_sequence',
+ '_promote_types',
+ '_reshape_from_tensor',
+ '_s_copy_from',
+ '_s_where',
+ '_sample_dirichlet',
+ '_shape_as_tensor',
+ '_six',
+ '_sobol_engine_draw',
+ '_sobol_engine_ff_',
+ '_sobol_engine_initialize_state_',
+ '_sobol_engine_scramble_',
+ '_softmax',
+ '_softmax_backward_data',
+ '_sparse_addmm',
+ '_sparse_mm',
+ '_sparse_sum',
+ '_standard_gamma',
+ '_standard_gamma_grad',
+ '_storage_classes',
+ '_string_classes',
+ '_tensor_classes',
+ '_tensor_str',
+ '_thnn',
+ '_trilinear',
+ '_unique',
+ '_unique2',
+ '_utils',
+ '_utils_internal',
+ '_weight_norm',
+ '_weight_norm_cuda_interface',
+ 'abs',
+ 'abs_',
+ 'acos',
+ 'acos_',
+ 'adaptive_avg_pool1d',
+ 'adaptive_max_pool1d',
+ 'add',
+ 'addbmm',
+ 'addcdiv',
+ 'addcmul',
+ 'addmm',
+ 'addmv',
+ 'addmv_',
+ 'addr',
+ 'affine_grid_generator',
+ 'all',
+ 'allclose',
+ 'alpha_dropout',
+ 'alpha_dropout_',
+ 'any',
+ 'arange',
+ 'argmax',
+ 'argmin',
+ 'argsort',
+ 'as_strided',
+ 'as_strided_',
+ 'as_tensor',
+ 'asin',
+ 'asin_',
+ 'atan',
+ 'atan2',
+ 'atan_',
+ 'autograd',
+ 'avg_pool1d',
+ 'backends',
+ 'baddbmm',
+ 'bartlett_window',
+ 'batch_norm',
+ 'batch_norm_backward_elemt',
+ 'batch_norm_backward_reduce',
+ 'batch_norm_elemt',
+ 'batch_norm_gather_stats',
+ 'batch_norm_stats',
+ 'batch_norm_update_stats',
+ 'bernoulli',
+ 'bilinear',
+ 'binary_cross_entropy_with_logits',
+ 'bincount',
+ 'blackman_window',
+ 'bmm',
+ 'bool',
+ 'broadcast_tensors',
+ 'btrifact',
+ 'btrifact_with_info',
+ 'btrisolve',
+ 'btriunpack',
+ 'cartesian_prod',
+ 'cat',
+ 'cdist',
+ 'ceil',
+ 'ceil_',
+ 'celu',
+ 'celu_',
+ 'chain_matmul',
+ 'cholesky',
+ 'cholesky_inverse',
+ 'cholesky_solve',
+ 'chunk',
+ 'clamp',
+ 'clamp_',
+ 'clamp_max',
+ 'clamp_max_',
+ 'clamp_min',
+ 'clamp_min_',
+ 'clone',
+ 'combinations',
+ 'compiled_with_cxx11_abi',
+ 'complex128',
+ 'complex32',
+ 'complex64',
+ 'constant_pad_nd',
+ 'conv1d',
+ 'conv2d',
+ 'conv3d',
+ 'conv_tbc',
+ 'conv_transpose1d',
+ 'conv_transpose2d',
+ 'conv_transpose3d',
+ 'convolution',
+ 'cos',
+ 'cos_',
+ 'cosh',
+ 'cosh_',
+ 'cosine_embedding_loss',
+ 'cosine_similarity',
+ 'cpp',
+ 'cross',
+ 'ctc_loss',
+ 'cuda',
+ 'cudnn_affine_grid_generator',
+ 'cudnn_batch_norm',
+ 'cudnn_convolution',
+ 'cudnn_convolution_transpose',
+ 'cudnn_grid_sampler',
+ 'cudnn_is_acceptable',
+ 'cumprod',
+ 'cumsum',
+ 'default_generator',
+ 'dequantize',
+ 'det',
+ 'detach',
+ 'detach_',
+ 'device',
+ 'diag',
+ 'diag_embed',
+ 'diagflat',
+ 'diagonal',
+ 'digamma',
+ 'dist',
+ 'distributed',
+ 'distributions',
+ 'div',
+ 'dot',
+ 'double',
+ 'dropout',
+ 'dropout_',
+ 'dsmm',
+ 'dtype',
+ 'eig',
+ 'einsum',
+ 'embedding',
+ 'embedding_bag',
+ 'embedding_renorm_',
+ 'empty',
+ 'empty_like',
+ 'empty_strided',
+ 'enable_grad',
+ 'eq',
+ 'equal',
+ 'erf',
+ 'erf_',
+ 'erfc',
+ 'erfc_',
+ 'erfinv',
+ 'exp',
+ 'exp_',
+ 'expm1',
+ 'expm1_',
+ 'eye',
+ 'fbgemm_is_cpu_supported',
+ 'fbgemm_linear_int8_weight',
+ 'fbgemm_linear_quantize_weight',
+ 'fbgemm_pack_quantized_matrix',
+ 'feature_alpha_dropout',
+ 'feature_alpha_dropout_',
+ 'feature_dropout',
+ 'feature_dropout_',
+ 'fft',
+ 'fill_',
+ 'finfo',
+ 'flatten',
+ 'flip',
+ 'float',
+ 'float16',
+ 'float32',
+ 'float64',
+ 'floor',
+ 'floor_',
+ 'fmod',
+ 'fork',
+ 'frac',
+ 'frac_',
+ 'frobenius_norm',
+ 'from_file',
+ 'from_numpy',
+ 'full',
+ 'full_like',
+ 'functional',
+ 'gather',
+ 'ge',
+ 'gels',
+ 'geqrf',
+ 'ger',
+ 'gesv',
+ 'get_default_dtype',
+ 'get_device',
+ 'get_file_path',
+ 'get_num_threads',
+ 'get_rng_state',
+ 'grid_sampler',
+ 'grid_sampler_2d',
+ 'grid_sampler_3d',
+ 'group_norm',
+ 'gru',
+ 'gru_cell',
+ 'gt',
+ 'half',
+ 'hamming_window',
+ 'hann_window',
+ 'hardshrink',
+ 'has_cuda',
+ 'has_cudnn',
+ 'has_lapack',
+ 'has_mkl',
+ 'has_mkldnn',
+ 'has_openmp',
+ 'hinge_embedding_loss',
+ 'histc',
+ 'hsmm',
+ 'hspmm',
+ 'hub',
+ 'ifft',
+ 'iinfo',
+ 'import_ir_module',
+ 'import_ir_module_from_buffer',
+ 'index_add',
+ 'index_copy',
+ 'index_fill',
+ 'index_put',
+ 'index_put_',
+ 'index_select',
+ 'initial_seed',
+ 'instance_norm',
+ 'int',
+ 'int16',
+ 'int32',
+ 'int64',
+ 'int8',
+ 'int_repr',
+ 'inverse',
+ 'irfft',
+ 'is_anomaly_enabled',
+ 'is_complex',
+ 'is_distributed',
+ 'is_floating_point',
+ 'is_grad_enabled',
+ 'is_nonzero',
+ 'is_same_size',
+ 'is_signed',
+ 'is_storage',
+ 'is_tensor',
+ 'isclose',
+ 'isfinite',
+ 'isinf',
+ 'isnan',
+ 'jit',
+ 'kl_div',
+ 'kthvalue',
+ 'layer_norm',
+ 'layout',
+ 'le',
+ 'lerp',
+ 'lgamma',
+ 'linspace',
+ 'load',
+ 'log',
+ 'log10',
+ 'log10_',
+ 'log1p',
+ 'log1p_',
+ 'log2',
+ 'log2_',
+ 'log_',
+ 'log_softmax',
+ 'logdet',
+ 'logspace',
+ 'logsumexp',
+ 'long',
+ 'lstm',
+ 'lstm_cell',
+ 'lt',
+ 'lu',
+ 'lu_solve',
+ 'lu_unpack',
+ 'manual_seed',
+ 'margin_ranking_loss',
+ 'masked_fill',
+ 'masked_scatter',
+ 'masked_select',
+ 'matmul',
+ 'matrix_power',
+ 'matrix_rank',
+ 'max',
+ 'max_pool1d',
+ 'max_pool1d_with_indices',
+ 'max_pool2d',
+ 'max_pool3d',
+ 'mean',
+ 'median',
+ 'merge_type_from_type_comment',
+ 'meshgrid',
+ 'min',
+ 'miopen_batch_norm',
+ 'miopen_convolution',
+ 'miopen_convolution_transpose',
+ 'miopen_depthwise_convolution',
+ 'mkldnn_convolution',
+ 'mkldnn_convolution_backward_weights',
+ 'mkldnn_max_pool2d',
+ 'mkldnn_reshape',
+ 'mm',
+ 'mode',
+ 'mul',
+ 'multinomial',
+ 'multiprocessing',
+ 'mv',
+ 'mvlgamma',
+ 'name',
+ 'narrow',
+ 'native_batch_norm',
+ 'native_norm',
+ 'ne',
+ 'neg',
+ 'neg_',
+ 'nn',
+ 'no_grad',
+ 'nonzero',
+ 'norm',
+ 'norm_except_dim',
+ 'normal',
+ 'nuclear_norm',
+ 'numel',
+ 'ones',
+ 'ones_like',
+ 'onnx',
+ 'ops',
+ 'optim',
+ 'orgqr',
+ 'ormqr',
+ 'os',
+ 'pairwise_distance',
+ 'parse_ir',
+ 'parse_type_comment',
+ 'pdist',
+ 'pin_memory',
+ 'pinverse',
+ 'pixel_shuffle',
+ 'platform',
+ 'poisson',
+ 'polygamma',
+ 'potrf',
+ 'potri',
+ 'potrs',
+ 'pow',
+ 'prelu',
+ 'prepare_multiprocessing_environment',
+ 'prod',
+ 'pstrf',
+ 'q_scale',
+ 'q_zero_point',
+ 'qint8',
+ 'qr',
+ 'quantize_linear',
+ 'quantized_gru_cell',
+ 'quantized_lstm',
+ 'quantized_lstm_cell',
+ 'quantized_rnn_relu_cell',
+ 'quantized_rnn_tanh_cell',
+ 'quasirandom',
+ 'rand',
+ 'rand_like',
+ 'randint',
+ 'randint_like',
+ 'randn',
+ 'randn_like',
+ 'random',
+ 'randperm',
+ 'range',
+ 'reciprocal',
+ 'reciprocal_',
+ 'relu',
+ 'relu_',
+ 'remainder',
+ 'renorm',
+ 'repeat_interleave',
+ 'reshape',
+ 'resize_as_',
+ 'rfft',
+ 'rnn_relu',
+ 'rnn_relu_cell',
+ 'rnn_tanh',
+ 'rnn_tanh_cell',
+ 'roll',
+ 'rot90',
+ 'round',
+ 'round_',
+ 'rrelu',
+ 'rrelu_',
+ 'rsqrt',
+ 'rsqrt_',
+ 'rsub',
+ 's_copy_',
+ 's_native_addmm',
+ 's_native_addmm_',
+ 'saddmm',
+ 'save',
+ 'scalar_tensor',
+ 'scatter',
+ 'scatter_add',
+ 'select',
+ 'selu',
+ 'selu_',
+ 'serialization',
+ 'set_anomaly_enabled',
+ 'set_default_dtype',
+ 'set_default_tensor_type',
+ 'set_flush_denormal',
+ 'set_grad_enabled',
+ 'set_num_threads',
+ 'set_printoptions',
+ 'set_rng_state',
+ 'short',
+ 'sigmoid',
+ 'sigmoid_',
+ 'sign',
+ 'sin',
+ 'sin_',
+ 'sinh',
+ 'sinh_',
+ 'slogdet',
+ 'smm',
+ 'softmax',
+ 'solve',
+ 'sort',
+ 'sparse',
+ 'sparse_coo',
+ 'sparse_coo_tensor',
+ 'split',
+ 'split_with_sizes',
+ 'spmm',
+ 'sqrt',
+ 'sqrt_',
+ 'squeeze',
+ 'sspaddmm',
+ 'stack',
+ 'std',
+ 'stft',
+ 'storage',
+ 'strided',
+ 'sub',
+ 'sum',
+ 'svd',
+ 'symeig',
+ 'sys',
+ 't',
+ 'take',
+ 'tan',
+ 'tan_',
+ 'tanh',
+ 'tanh_',
+ 'tensor',
+ 'tensordot',
+ 'testing',
+ 'threshold',
+ 'threshold_',
+ 'topk',
+ 'torch',
+ 'trace',
+ 'transpose',
+ 'triangular_solve',
+ 'tril',
+ 'tril_indices',
+ 'triplet_margin_loss',
+ 'triu',
+ 'triu_indices',
+ 'trtrs',
+ 'trunc',
+ 'trunc_',
+ 'typename',
+ 'uint8',
+ 'unbind',
+ 'unique',
+ 'unique_consecutive',
+ 'unsqueeze',
+ 'utils',
+ 'var',
+ 'version',
+ 'wait',
+ 'where',
+ 'zero_',
+ 'zeros',
+ 'zeros_like']</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<span class="n">help</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">lu</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Help on function lu in module torch.functional:
+
+lu(A, pivot=True, get_infos=False, out=None)
+    Computes the LU factorization of a square matrix or batches of square matrices
+    :attr:`A`. Returns a tuple containing the LU factorization and pivots of :attr:`A`.
+    Pivoting is done if :attr:`pivot` is set to ``True``.
+    
+    .. note::
+        The pivots returned by the function are 1-indexed. If :attr:`pivot` is ``False``,
+        then the returned pivots is a tensor filled with zeros of the appropriate size.
+    
+    .. note::
+        LU factorization with :attr:`pivot` = ``False`` is not available for CPU, and attempting
+        to do so will throw an error. However, LU factorization with :attr:`pivot` = ``False`` is
+        available for CUDA.
+    
+    .. note::
+        This function does not check if the factorization was successful or not if
+        :attr:`get_infos` is ``True`` since the status of the factorization is present in the
+        third element of the return tuple.
+    
+    Arguments:
+        A (Tensor): the tensor to factor of size :math:`(*, m, m)`
+        pivot (bool, optional): controls whether pivoting is done. Default: ``True``
+        get_infos (bool, optional): if set to ``True``, returns an info IntTensor.
+                                    Default: ``False``
+        out (tuple, optional): optional output tuple. If :attr:`get_infos` is ``True``,
+                               then the elements in the tuple are Tensor, IntTensor,
+                               and IntTensor. If :attr:`get_infos` is ``False``, then the
+                               elements in the tuple are Tensor, IntTensor. Default: ``None``
+    
+    Returns:
+        (Tensor, IntTensor, IntTensor (optional)): A tuple of tensors containing
+    
+            - **factorization** (*Tensor*): the factorization of size :math:`(*, m, m)`
+    
+            - **pivots** (*IntTensor*): the pivots of size :math:`(*, m)`
+    
+            - **infos** (*IntTensor*, *optional*): if :attr:`get_infos` is ``True``, this is a tensor of
+              size :math:`(*)` where non-zero values indicate whether factorization for the matrix or
+              each minibatch has succeeded or failed
+    
+    Example::
+    
+        &gt;&gt;&gt; A = torch.randn(2, 3, 3)
+        &gt;&gt;&gt; A_LU, pivots = torch.lu(A)
+        &gt;&gt;&gt; A_LU
+        tensor([[[ 1.3506,  2.5558, -0.0816],
+                 [ 0.1684,  1.1551,  0.1940],
+                 [ 0.1193,  0.6189, -0.5497]],
+    
+                [[ 0.4526,  1.2526, -0.3285],
+                 [-0.7988,  0.7175, -0.9701],
+                 [ 0.2634, -0.9255, -0.3459]]])
+        &gt;&gt;&gt; pivots
+        tensor([[ 3,  3,  3],
+                [ 3,  3,  3]], dtype=torch.int32)
+        &gt;&gt;&gt; A_LU, pivots, info = torch.lu(A, get_infos=True)
+        &gt;&gt;&gt; if info.nonzero().size(0) == 0:
+        ...   print('LU factorization succeeded for all samples!')
+        LU factorization succeeded for all samples!
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Primeira-função---torch.chain_matmul">
+<a class="anchor" href="#Primeira-fun%C3%A7%C3%A3o---torch.chain_matmul" aria-hidden="true"><span class="octicon octicon-link"></span></a>Primeira função - torch.chain_matmul<a class="anchor-link" href="#Primeira-fun%C3%A7%C3%A3o---torch.chain_matmul"> </a>
+</h2>
+<p>Uma das atividades mais utilizadas em <em>Deep Learning</em> é a multiplicação de matrizes e uma das funções que o <em>Pytorch</em> nos oferece para esta atividade é o <code>matmul</code> , onde nos oferece a oportundiade de realizar o produtor de 2 tensores.</p>
+<p>Nesta primeira função eu destaco a função <code>chain_matmul</code> que pode ser utilizada para realizar produtos de N tensors</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Criamos 3 matrizes <code>2x2</code> utilizando a função <code>torch.randn</code></p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description" open="">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-show</span>
+<span class="c1"># Example 1 - working </span>
+
+<span class="n">matrix1</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">matrix2</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">matrix3</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+
+<span class="c1"># Sample</span>
+<span class="p">[</span><span class="n">matrix3</span><span class="p">,</span> <span class="n">matrix1</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[tensor([[-1.0494,  0.4786, -0.2496, -0.9682, -1.1614, -1.6895],
+         [ 0.4752, -0.0841, -1.4004,  0.0402, -0.5590, -0.9405],
+         [ 0.5449,  1.5989,  0.5870, -1.2225, -0.3488, -0.2063],
+         [ 2.5068, -1.1578,  0.4410, -1.4279,  1.5589, -0.1604],
+         [-0.0883,  1.3295, -1.4044, -0.6259, -1.1656,  0.1526]]),
+ tensor([[ 2.8613,  0.3382,  0.3099,  0.7402],
+         [-0.6262, -1.3056,  0.6018, -0.6395],
+         [-0.9182, -0.1888, -0.2580, -0.0872]])]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Para realizar a multiplicação simplesmente passamos as 3 matrizes como argumento.</p>
+<p>Detalhe sobre as matrizes :</p>
+<ul>
+<li>
+<code>matrix1</code> é uma matriz 3x4 : 3 linhas e 4 colunas</li>
+<li>
+<code>matrix2</code> é uma matriz 4x5 : 4 linhas e 5 colunas</li>
+<li>
+<code>matrix3</code> é uma matriz 5x6 : 5 linhas e 6 colunas</li>
+</ul>
+<p>O resultado dessa multiplicação é uma nova matriz <code>3x6</code>, ou seja, 3 linhsa e 6 colunas.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description" open="">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-show</span>
+<span class="c1"># performing product</span>
+<span class="n">torch</span><span class="o">.</span><span class="n">chain_matmul</span><span class="p">(</span><span class="n">matrix1</span><span class="p">,</span> <span class="n">matrix2</span><span class="p">,</span> <span class="n">matrix3</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>tensor([[-8.0324, -2.8931,  0.1645,  5.4147, -1.6135, -0.1331],
+        [ 0.0715, -1.8514, -0.1220,  0.7759,  1.0616,  1.0326],
+        [ 3.3314,  0.4199,  0.5218, -2.4496,  1.1681, -0.2269]])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Um segundo exemplo utilizando 4 matrizes maiores</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description" open="">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-show</span>
+<span class="c1"># Example 2 - working</span>
+
+<span class="n">matrix1</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span><span class="mi">110</span><span class="p">)</span>
+<span class="n">matrix2</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">110</span><span class="p">,</span><span class="mi">120</span><span class="p">)</span>
+<span class="n">matrix3</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">120</span><span class="p">,</span><span class="mi">130</span><span class="p">)</span>
+<span class="n">matrix4</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">130</span><span class="p">,</span><span class="mi">140</span><span class="p">)</span>
+
+
+
+<span class="c1"># Sample</span>
+<span class="p">[</span><span class="n">matrix1</span><span class="p">,</span> <span class="n">matrix2</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[tensor([[-1.0113,  2.7251,  0.1640,  ..., -1.1982,  0.2516,  2.3802],
+         [-0.2575,  1.0712, -0.1683,  ...,  0.0799,  0.1335, -0.2284],
+         [-0.4726,  1.4036, -1.6088,  ...,  0.3482,  0.6061, -0.0266],
+         ...,
+         [ 0.7878,  0.5653, -0.7980,  ..., -0.6144,  0.7365, -1.5773],
+         [-1.2001, -2.0501,  0.2104,  ..., -1.2552,  0.2905, -0.4115],
+         [ 0.7512,  1.0929, -0.1207,  ..., -2.0084, -0.8357, -1.8306]]),
+ tensor([[-1.0272,  1.3241, -0.7045,  ...,  2.6188,  0.7776,  0.2609],
+         [-2.2178,  0.2632, -1.0765,  ...,  1.0710, -0.0811, -0.6641],
+         [ 0.8842, -0.5080,  0.2268,  ...,  0.1498,  0.2623, -1.1105],
+         ...,
+         [-1.0267,  0.8322, -1.3487,  ..., -0.7979, -1.6696, -0.4104],
+         [ 0.9523, -0.4135, -0.2482,  ...,  0.6825, -1.1463, -0.7079],
+         [ 0.0572,  0.5462,  0.4128,  ...,  1.1507,  1.1007,  2.5236]])]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Neste exemplo mostro como a função é eficiente, levando apenas <code>3.94ms</code> para realizar a multiplicação de todas as matrizes.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description" open="">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-show</span>
+<span class="c1"># performing product</span>
+<span class="o">%</span><span class="k">time</span> torch.chain_matmul(matrix1, matrix2, matrix3,matrix4)
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>CPU times: user 3.14 ms, sys: 802 µs, total: 3.94 ms
+Wall time: 53.4 ms
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>tensor([[-1.0312e+03,  2.2024e+03,  8.7111e+02,  ..., -1.6845e+03,
+         -1.8864e+03,  2.1999e+03],
+        [-2.6746e+03, -1.2506e+03, -6.2687e+02,  ...,  1.6874e+03,
+          2.2933e+03, -2.3796e+02],
+        [ 2.0759e+02, -1.3513e+03, -1.8177e+03,  ..., -9.0427e+02,
+         -1.5769e+03,  3.6219e+03],
+        ...,
+        [-3.3170e+01,  5.5390e+02,  4.1289e+02,  ..., -1.4384e+03,
+          3.1857e+02,  5.0504e+03],
+        [ 4.1570e+02, -1.2112e+03,  4.0855e+00,  ..., -3.3088e+02,
+         -3.1520e+02, -1.3502e+03],
+        [ 3.5522e+03, -1.2904e+03, -3.7685e+02,  ...,  1.6309e+02,
+         -3.0861e+02, -3.3388e+02]])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>No terceiro exemplo destaco um exemplo de falha, tentando realizar multiplicação de matrizes com dimensões diferentes.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description" open="">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-show</span>
+<span class="c1"># Example 3 - breaking </span>
+
+<span class="n">matrix1</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">matrix2</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+
+<span class="c1"># Sample</span>
+<span class="p">[</span><span class="n">matrix2</span><span class="p">,</span> <span class="n">matrix1</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[tensor([[[-1.3402, -1.3130, -0.3395,  0.5945],
+          [-0.0259, -0.1071, -1.1639,  1.0613],
+          [-0.7485, -1.1593, -1.5075, -1.0894],
+          [-1.3146,  2.8806,  0.2349,  0.2622],
+          [ 1.0905, -0.5099,  1.3923, -0.8981]],
+ 
+         [[-0.7263, -0.2341, -0.5183,  0.3943],
+          [ 0.6819,  0.1342,  0.0794, -0.0281],
+          [-1.4046, -1.2519,  0.4766,  0.3968],
+          [ 0.0881, -0.9358, -1.5493,  0.1794],
+          [-1.0300,  0.8201, -0.2617,  0.7340]],
+ 
+         [[-0.7806,  1.0247, -0.5675, -0.1108],
+          [-0.5045, -1.4726,  0.6898, -0.2458],
+          [ 0.1259, -0.9895,  1.2314,  0.3145],
+          [ 0.0806,  1.2443, -0.9222,  0.2020],
+          [-0.6894, -0.1846,  0.5644,  0.1418]],
+ 
+         [[ 0.3160, -0.3909,  0.5069, -2.4691],
+          [ 0.2330, -1.4668,  0.9580, -0.2209],
+          [ 1.1199, -0.7593,  0.7848,  0.5991],
+          [-0.3350, -1.3236, -0.7181,  0.7984],
+          [-1.2864,  1.1569, -1.7247, -0.4536]]]),
+ tensor([[ 0.5584,  1.1150, -1.2637,  1.5120],
+         [-0.3575,  1.1148, -1.4004,  2.1986],
+         [-1.3665,  1.1424,  0.2155, -0.0970]])]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description" open="">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-show</span>
+<span class="n">torch</span><span class="o">.</span><span class="n">chain_matmul</span><span class="p">(</span><span class="n">matrix1</span><span class="p">,</span> <span class="n">matrix2</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">RuntimeError</span>                              Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-18-fc1c9bb90b38&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-intense-fg ansi-bold">      1</span> <span class="ansi-red-fg">#collapse-show</span>
+<span class="ansi-green-fg">----&gt; 2</span><span class="ansi-red-fg"> </span>torch<span class="ansi-blue-fg">.</span>chain_matmul<span class="ansi-blue-fg">(</span>matrix1<span class="ansi-blue-fg">,</span> matrix2<span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg">~/anaconda3/lib/python3.7/site-packages/torch/functional.py</span> in <span class="ansi-cyan-fg">chain_matmul</span><span class="ansi-blue-fg">(*matrices)</span>
+<span class="ansi-green-intense-fg ansi-bold">    740</span>     <span class="ansi-blue-fg">.</span><span class="ansi-blue-fg">.</span> _<span class="ansi-red-fg">`</span><span class="ansi-blue-fg">[</span>CLRS<span class="ansi-blue-fg">]</span><span class="ansi-red-fg">`</span><span class="ansi-blue-fg">:</span> https<span class="ansi-blue-fg">:</span><span class="ansi-blue-fg">//</span>mitpress<span class="ansi-blue-fg">.</span>mit<span class="ansi-blue-fg">.</span>edu<span class="ansi-blue-fg">/</span>books<span class="ansi-blue-fg">/</span>introduction<span class="ansi-blue-fg">-</span>algorithms<span class="ansi-blue-fg">-</span>third<span class="ansi-blue-fg">-</span>edition
+<span class="ansi-green-intense-fg ansi-bold">    741</span>     """
+<span class="ansi-green-fg">--&gt; 742</span><span class="ansi-red-fg">     </span><span class="ansi-green-fg">return</span> torch<span class="ansi-blue-fg">.</span>_C<span class="ansi-blue-fg">.</span>_VariableFunctions<span class="ansi-blue-fg">.</span>chain_matmul<span class="ansi-blue-fg">(</span>matrices<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    743</span> 
+<span class="ansi-green-intense-fg ansi-bold">    744</span> 
+
+<span class="ansi-red-fg">RuntimeError</span>: Tensor dimension is 3, expected 2 instead.</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Podemos ver que o output de erro do pytorch é bem explicativo, nos retornando que esperava um Tensor de 2D, duas dimensões e recebeu um Tensor 3D.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Segunda-função---torch.cumprod">
+<a class="anchor" href="#Segunda-fun%C3%A7%C3%A3o---torch.cumprod" aria-hidden="true"><span class="octicon octicon-link"></span></a>Segunda função - torch.cumprod<a class="anchor-link" href="#Segunda-fun%C3%A7%C3%A3o---torch.cumprod"> </a>
+</h2>
+<p>This second function returns the cumulative product of elements</p>
+<p>Nesta segunda função gostaria de destacar a função <code>torch.cumprod</code> , onde o nome é bem intuitivo quanto sua ação, isto mesmo , esta função realiza produto comulativo de tensores.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Para exemplificar, neste primeiro exemplo crio um tensor de dois números randomicos e utilizo a função <code>cumprod</code> para realizar o produto.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description" open="">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-show</span>
+<span class="c1"># Example 1 - working</span>
+
+<span class="n">nums</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">nums</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>tensor([-0.9611,  0.5437])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description" open="">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-show</span>
+<span class="n">torch</span><span class="o">.</span><span class="n">cumprod</span><span class="p">(</span><span class="n">nums</span><span class="p">,</span><span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>tensor([-0.9611, -0.5226])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Como pode ser observar o segundo elemento foi substituido pelo produto entre os dois números, nesta função também utilizo o argumento <code>dim=0</code>, que indica a dimensão da multiplicação.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description" open="">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-show</span>
+<span class="o">-</span><span class="mf">0.9611</span> <span class="o">*</span>  <span class="mf">0.5437</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>-0.52255007</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Neste segundo exemplo utilizando ainda a função <code>cumprod</code>, vamos realizar o produto cumulativo entre um tensor 3x3 :</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description" open="">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-show</span>
+<span class="c1"># Example 2 - working</span>
+<span class="n">nums</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">nums</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>tensor([[ 1.8956, -1.4917, -0.9016],
+        [-0.8868,  0.2748, -0.2181],
+        [ 0.5888,  0.2202, -0.9849]])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description" open="">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-show</span>
+<span class="n">torch</span><span class="o">.</span><span class="n">cumprod</span><span class="p">(</span><span class="n">nums</span><span class="p">,</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>tensor([[ 1.8956, -2.8277,  2.5494],
+        [-0.8868, -0.2437,  0.0531],
+        [ 0.5888,  0.1297, -0.1277]])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Abaixo a multiplicação realizada manualmente, utilizando um tensor <code>3x3</code> , utilizando <code>dim=1</code> , dimensão 1:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description" open="">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-show</span>
+<span class="mf">1.8956</span> <span class="o">*</span> <span class="o">-</span><span class="mf">1.4917</span> <span class="o">*</span> <span class="o">-</span><span class="mf">0.9016</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>2.549424134432</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>No terceiro exemplo mostro como se especificar uma dimensão inexistente teremos o seguinte resultado.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description" open="">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-show</span>
+<span class="c1"># Example 3 - breaking</span>
+
+<span class="n">nums</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">nums</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>tensor([[ 0.7083, -1.3484,  2.3374],
+        [-0.1800, -0.2821,  1.4368],
+        [ 0.8014, -1.1346, -0.7196]])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description" open="">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-show</span>
+<span class="n">torch</span><span class="o">.</span><span class="n">cumprod</span><span class="p">(</span><span class="n">nums</span><span class="p">,</span><span class="n">dim</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">IndexError</span>                                Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-121-f405a7ba577b&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span>torch<span class="ansi-blue-fg">.</span>cumprod<span class="ansi-blue-fg">(</span>nums<span class="ansi-blue-fg">,</span>dim<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">9</span><span class="ansi-blue-fg">)</span>
+
+<span class="ansi-red-fg">IndexError</span>: Dimension out of range (expected to be in range of [-2, 1], but got 9)</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Terceira-função---torch.det">
+<a class="anchor" href="#Terceira-fun%C3%A7%C3%A3o---torch.det" aria-hidden="true"><span class="octicon octicon-link"></span></a>Terceira função - torch.det<a class="anchor-link" href="#Terceira-fun%C3%A7%C3%A3o---torch.det"> </a>
+</h2>
+<p>Esta terceira função é utilizada para calcular a determinante de uma matriz quadrada.</p>
+<p>Por definição, uma matriz é considerada quadrada quando o número de colunas é igual ao número de linhas e esta associdada a um número que recebe a denominação de determinante .</p>
+<p>Marcos Noe, no site <a href="https://brasilescola.uol.com.br/matematica/determinantes-1.htm">brasilescola.uol.com.br</a>, explica que :</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p></p>
+<div class="flash">
+    <svg class="octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 01-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 01-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg>
+    <strong>Note: </strong>O determinante de uma Matriz é dado pelo valor numérico resultante da subtração entre o somatório do produto dos termos da diagonal principal e do somatório do produto dos termos da diagonal secundária
+</div>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Example 1 - working</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mi">2</span><span class="p">,</span><span class="mi">9</span><span class="p">],[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mf">6.</span><span class="p">]])</span>
+<span class="n">a</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>tensor([[ 2.,  9.],
+        [-1.,  6.]])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Neste primeiro exemplo tempos :</p>
+<ul>
+<li>A diagonal principal 2,6, onde o produto é  : <code>2 * 6 = 12</code>
+</li>
+<li>A diagonal secundária -1,9 , o produto será :  <code>-1 * 9 = -9</code>
+</li>
+<li>E por fim a soma : <code>12 - (-9) = 21</code>
+</li>
+</ul>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">torch</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>tensor(21.)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Neste segundo exemplo vamos ver uma matriz <code>3x3</code></p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Example 2 - working</span>
+
+
+<span class="n">A</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">A</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>tensor([[-0.1348, -1.0434,  0.0589],
+        [ 0.2338,  1.0583, -0.1160],
+        [-0.6723,  0.7773,  0.8919]])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">torch</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>tensor(0.0493)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Como pytorch trabalha com valores em <em>float</em> não podemos apresentar valores inteiros para a função pois como documentado ela espera um valor do time <code>float</code></p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Example 3 - breaking </span>
+
+<span class="n">b</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mi">2</span><span class="p">,</span><span class="mi">9</span><span class="p">],[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">6</span><span class="p">]])</span>
+<span class="n">b</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>tensor([[ 2,  9],
+        [-1,  6]])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">torch</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">RuntimeError</span>                              Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-135-eaa77d970a4d&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span>torch<span class="ansi-blue-fg">.</span>det<span class="ansi-blue-fg">(</span>b<span class="ansi-blue-fg">)</span>
+
+<span class="ansi-red-fg">RuntimeError</span>: Expected a floating point tensor as input</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Quarta-função---torch.flatten">
+<a class="anchor" href="#Quarta-fun%C3%A7%C3%A3o---torch.flatten" aria-hidden="true"><span class="octicon octicon-link"></span></a>Quarta função - torch.flatten<a class="anchor-link" href="#Quarta-fun%C3%A7%C3%A3o---torch.flatten"> </a>
+</h2>
+<p>Esta função é utilizada para transformar uma matriz em um vetor, ou seja, como demostrado no exemplo abaixo ela pega uma matriz 2x2 e transforma em um vetor unidimensional.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Example 1 - working</span>
+
+<span class="n">T</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+                  <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]])</span>
+
+<span class="n">T</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>tensor([[1, 2],
+        [3, 4]])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">torch</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>tensor([1, 2, 3, 4])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Como podemos ver no segundo exemplo temos um tensor 2x2x2 , ou seja duas matrizes, neste caso ao realizar o <code>flatten</code> teremos o seguinte output:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Example 2 - working</span>
+
+
+<span class="n">T</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+                   <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]],</span>
+                  <span class="p">[[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span>
+                   <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">]]])</span>
+
+<span class="n">T</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>tensor([[[1, 2],
+         [3, 4]],
+
+        [[5, 6],
+         [7, 8]]])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">torch</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">start_dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>tensor([[1, 2, 3, 4],
+        [5, 6, 7, 8]])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Podemos utilizar como no exemplo o parametro <code>start_dim</code> para espeficicar a primera dimensão.</p>
+<p>Abaixo teremos um exemplo onde não se pode aplicar o flatten quando range de dimensões não é válido.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Example 3 - breaking </span>
+
+
+<span class="n">T</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+                  <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]])</span>
+
+<span class="n">T</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>tensor([[1, 2],
+        [3, 4]])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">torch</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">start_dim</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">IndexError</span>                                Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-165-f58365975ace&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span>torch<span class="ansi-blue-fg">.</span>flatten<span class="ansi-blue-fg">(</span>T<span class="ansi-blue-fg">,</span> start_dim<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">2</span><span class="ansi-blue-fg">)</span>
+
+<span class="ansi-red-fg">IndexError</span>: Dimension out of range (expected to be in range of [-2, 1], but got 2)</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Quinta-função----torch.lu">
+<a class="anchor" href="#Quinta-fun%C3%A7%C3%A3o----torch.lu" aria-hidden="true"><span class="octicon octicon-link"></span></a>Quinta função  - torch.lu<a class="anchor-link" href="#Quinta-fun%C3%A7%C3%A3o----torch.lu"> </a>
+</h2>
+<p>A última função que destaco, mas não menos importante é a <code>torch.lu</code> , esta interessante função retorna uma tupla contendo <strong>LU factorization</strong> e <strong>pivots</strong>, no primeiro exemplo criamos um tensor 2x3x3 e aplicamos a função:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Example 1 - working</span>
+
+<span class="n">A</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">A_LU</span><span class="p">,</span> <span class="n">pivots</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">lu</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">pivot</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">A_LU</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>tensor([[[-0.8440,  0.3518, -0.0991],
+         [ 0.6065, -1.2822, -1.2502],
+         [-0.9766,  0.5978, -0.9145]],
+
+        [[-0.4165,  1.0368, -0.7703],
+         [ 0.3856, -0.8209, -0.9273],
+         [-0.9241, -0.7736, -0.5355]]])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pivots</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>tensor([[3, 3, 3],
+        [2, 2, 3]], dtype=torch.int32)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span> <span class="n">A_LU</span><span class="p">,</span> <span class="n">pivots</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">lu</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">get_infos</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">info</span><span class="o">.</span><span class="n">nonzero</span><span class="p">()</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'LU factorization succeeded for all samples!'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>LU factorization succeeded for all samples!
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">info</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>tensor([0, 0], dtype=torch.int32)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Como todo exemplo quero mostrar uma utilização com erro, como podemos ver algumas opção só estão disponiveis para processamento em <code>GPU/CUDA</code>.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Example 3 - breaking </span>
+
+<span class="n">A</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">A_LU</span><span class="p">,</span> <span class="n">pivots</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">lu</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">pivot</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">A_LU</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">RuntimeError</span>                              Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-185-c3dc98d6d278&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-intense-fg ansi-bold">      4</span> 
+<span class="ansi-green-intense-fg ansi-bold">      5</span> A <span class="ansi-blue-fg">=</span> torch<span class="ansi-blue-fg">.</span>randn<span class="ansi-blue-fg">(</span><span class="ansi-cyan-fg">2</span><span class="ansi-blue-fg">,</span> <span class="ansi-cyan-fg">3</span><span class="ansi-blue-fg">,</span> <span class="ansi-cyan-fg">3</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">----&gt; 6</span><span class="ansi-red-fg"> </span>A_LU<span class="ansi-blue-fg">,</span> pivots <span class="ansi-blue-fg">=</span> torch<span class="ansi-blue-fg">.</span>lu<span class="ansi-blue-fg">(</span>A<span class="ansi-blue-fg">,</span> pivot<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">False</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">      7</span> A_LU
+<span class="ansi-green-intense-fg ansi-bold">      8</span> 
+
+<span class="ansi-green-fg">/srv/conda/envs/notebook/lib/python3.7/site-packages/torch/_jit_internal.py</span> in <span class="ansi-cyan-fg">fn</span><span class="ansi-blue-fg">(*args, **kwargs)</span>
+<span class="ansi-green-intense-fg ansi-bold">    207</span>             <span class="ansi-green-fg">return</span> if_true<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">*</span>args<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>kwargs<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    208</span>         <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">--&gt; 209</span><span class="ansi-red-fg">             </span><span class="ansi-green-fg">return</span> if_false<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">*</span>args<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>kwargs<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    210</span> 
+<span class="ansi-green-intense-fg ansi-bold">    211</span>     <span class="ansi-green-fg">if</span> if_true<span class="ansi-blue-fg">.</span>__doc__ <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">None</span> <span class="ansi-green-fg">and</span> if_false<span class="ansi-blue-fg">.</span>__doc__ <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">not</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">:</span>
+
+<span class="ansi-green-fg">/srv/conda/envs/notebook/lib/python3.7/site-packages/torch/functional.py</span> in <span class="ansi-cyan-fg">_lu_no_infos</span><span class="ansi-blue-fg">(A, pivot, get_infos, out)</span>
+<span class="ansi-green-intense-fg ansi-bold">   1027</span>             return handle_torch_function(
+<span class="ansi-green-intense-fg ansi-bold">   1028</span>                 lu, (A,), A, pivot=pivot, get_infos=get_infos, out=out)
+<span class="ansi-green-fg">-&gt; 1029</span><span class="ansi-red-fg">     </span>result <span class="ansi-blue-fg">=</span> _lu_impl<span class="ansi-blue-fg">(</span>A<span class="ansi-blue-fg">,</span> pivot<span class="ansi-blue-fg">,</span> get_infos<span class="ansi-blue-fg">,</span> out<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">   1030</span>     <span class="ansi-green-fg">if</span> out <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">not</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">   1031</span>         _check_list_size<span class="ansi-blue-fg">(</span>len<span class="ansi-blue-fg">(</span>out<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">,</span> get_infos<span class="ansi-blue-fg">,</span> out<span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg">/srv/conda/envs/notebook/lib/python3.7/site-packages/torch/functional.py</span> in <span class="ansi-cyan-fg">_lu_impl</span><span class="ansi-blue-fg">(A, pivot, get_infos, out)</span>
+<span class="ansi-green-intense-fg ansi-bold">    993</span>     """
+<span class="ansi-green-intense-fg ansi-bold">    994</span>     <span class="ansi-red-fg"># If get_infos is True, then we don't need to check for errors and vice versa</span>
+<span class="ansi-green-fg">--&gt; 995</span><span class="ansi-red-fg">     </span><span class="ansi-green-fg">return</span> torch<span class="ansi-blue-fg">.</span>_lu_with_info<span class="ansi-blue-fg">(</span>A<span class="ansi-blue-fg">,</span> pivot<span class="ansi-blue-fg">=</span>pivot<span class="ansi-blue-fg">,</span> check_errors<span class="ansi-blue-fg">=</span><span class="ansi-blue-fg">(</span><span class="ansi-green-fg">not</span> get_infos<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    996</span> 
+<span class="ansi-green-intense-fg ansi-bold">    997</span> <span class="ansi-green-fg">def</span> _check_list_size<span class="ansi-blue-fg">(</span>out_len<span class="ansi-blue-fg">,</span> get_infos<span class="ansi-blue-fg">,</span> out<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+
+<span class="ansi-red-fg">RuntimeError</span>: lu without pivoting is not implemented on the CPU</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Conclusão">
+<a class="anchor" href="#Conclus%C3%A3o" aria-hidden="true"><span class="octicon octicon-link"></span></a>Conclusão<a class="anchor-link" href="#Conclus%C3%A3o"> </a>
+</h2>
+<p>Aprendi muito ao pesquisar as funções da lib torch, minha jornada em Deep Learning está no começo mas é muito estimulante ver como é facil a utilização e documentação, apesar do notebook ser uma lista de 5 funções tive o prazer de estudar diversas outras como <code>torch.randn</code>.</p>
+<p>Este notebook é a parte da primeira aula do curso <a href="https://jovian.ml/forum/c/pytorch-zero-to-gans">Zero to Gans</a> oferecido pela @Jovian.ml e @freecodecamp, muito obrigado @aakashns pela brilhante aula.</p>
+<p>Thank you @aakashns for the fantastic course.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Reference-Links">
+<a class="anchor" href="#Reference-Links" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reference Links<a class="anchor-link" href="#Reference-Links"> </a>
+</h2>
+<p>Algumas referencias :</p>
+<ul>
+<li>Official documentation for <code>torch.Tensor</code>: <a href="https://pytorch.org/docs/stable/tensors.html">https://pytorch.org/docs/stable/tensors.html</a>
+</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Video-aula-1---Zero-To-Gans">
+<a class="anchor" href="#Video-aula-1---Zero-To-Gans" aria-hidden="true"><span class="octicon octicon-link"></span></a>Video aula 1 - Zero To Gans<a class="anchor-link" href="#Video-aula-1---Zero-To-Gans"> </a>
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<blockquote>
+<p>youtube :<a href="https://www.youtube.com/watch?v=vo_fUOk-IKk">https://www.youtube.com/watch?v=vo_fUOk-IKk</a></p>
+</blockquote>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="brunodeabreu/blog"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/blog/pytorch/deep%20learning/2020/06/14/Descobrindo-5-Funcoes-Pytorch.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Compartilhando anotações sobre Data Science e AI, anotações de cursos, notebooks de projetos, etc.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/brunodeabreu" title="brunodeabreu"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/__bmachado__" title="__bmachado__"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
