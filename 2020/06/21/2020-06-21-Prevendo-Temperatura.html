@@ -16,13 +16,28 @@
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>Motivação</strong> :</p>
+<h2 id="Motiva&#231;&#227;o">Motiva&#231;&#227;o<a class="anchor-link" href="#Motiva&#231;&#227;o"> </a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>Na segunda semana do curso <a href="https://jovian.ml/forum/c/pytorch-zero-to-gans/18">Deep Learning with PyTorch: Zero to GANs</a> tive a oportunidade de trabalhar na construção de um modelo de regressão linear utilizando pytorch que realiza a predição de custo de seguro para um dataset oferecido pelo kaggle no desafio <a href="https://www.kaggle.com/mirichoi0218/insurance">Insurance</a>, meu notebook para esta atividade pode ser acessado no <a href="https://jovian.ml/brunodeabreu/02-insurance-linear-regression">link</a> .</p>
 <p>Baseado nesta atividade escolhi outro dataset disponibilizado pelo kaggle para um desafio com 60 anos de dados extraidos do oceano, o nome do desafio denomiado <a href="https://www.kaggle.com/sohier/calcofi">CalCOFI</a> <em>The California Cooperative Oceanic Fisheries Investigations</em> oferece dados de mais de 50.000 mil estações de coleta de amostragem, são dados físicos e quimicos que oferecem informações valiosas para explicar o clico climático da costa da Califórnia, tal pesquisa é tão importante que introduziu o termo <em>El Niño</em> conhecido hoje em dia.</p>
-<p><strong>Objetivo</strong> :</p>
-<p>Objetivo deste notebook é documentar cada etapa do processo de construção do modelo de rede neural para predição de problemas de regressão linear, abordagem e passos assim como aplicado ao problema de Insurance pode ser replicado a outros problemas com dados separados linearmente.</p>
-<p><strong>Questionamento</strong></p>
-<p>Será que esta arquitetura de rede neural será capaz de separar esses dados para solucionar o problema ?</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Objetivo-:">Objetivo :<a class="anchor-link" href="#Objetivo-:"> </a></h2><p>Objetivo deste notebook é documentar cada etapa do processo de construção do modelo de rede neural para predição de problemas de regressão linear, abordagem e passos assim como aplicado ao problema de Insurance pode ser replicado a outros problemas com dados separados linearmente.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Questionamento">Questionamento<a class="anchor-link" href="#Questionamento"> </a></h2><p>Será que esta arquitetura de rede neural será capaz de separar esses dados para solucionar o problema ?</p>
 
 </div>
 </div>
@@ -78,7 +93,7 @@
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Step-1-:-Importa&#231;&#227;o-de-bibliotecas,-download-doos-dados-e-explora&#231;&#227;o:">Step 1 : Importa&#231;&#227;o de bibliotecas, download doos dados e explora&#231;&#227;o:<a class="anchor-link" href="#Step-1-:-Importa&#231;&#227;o-de-bibliotecas,-download-doos-dados-e-explora&#231;&#227;o:"> </a></h2>
+<h3 id="Step-1-:-Importa&#231;&#227;o-de-bibliotecas,-download-doos-dados-e-explora&#231;&#227;o:">Step 1 : Importa&#231;&#227;o de bibliotecas, download doos dados e explora&#231;&#227;o:<a class="anchor-link" href="#Step-1-:-Importa&#231;&#227;o-de-bibliotecas,-download-doos-dados-e-explora&#231;&#227;o:"> </a></h3>
 </div>
 </div>
 </div>
@@ -744,7 +759,7 @@ Input columns :  [&#39;Summary&#39;, &#39;Precip Type&#39;, &#39;Apparent Temper
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Step-2:-Prepara&#231;&#227;o-do-Dataset">Step 2: Prepara&#231;&#227;o do Dataset<a class="anchor-link" href="#Step-2:-Prepara&#231;&#227;o-do-Dataset"> </a></h2>
+<h3 id="Step-2:-Prepara&#231;&#227;o-do-Dataset">Step 2: Prepara&#231;&#227;o do Dataset<a class="anchor-link" href="#Step-2:-Prepara&#231;&#227;o-do-Dataset"> </a></h3>
 </div>
 </div>
 </div>
@@ -1009,7 +1024,7 @@ Input columns :  [&#39;Summary&#39;, &#39;Precip Type&#39;, &#39;Apparent Temper
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Step-3-:-Cria&#231;&#227;o-do-modelo-de-Regress&#227;o-Linear">Step 3 : Cria&#231;&#227;o do modelo de Regress&#227;o Linear<a class="anchor-link" href="#Step-3-:-Cria&#231;&#227;o-do-modelo-de-Regress&#227;o-Linear"> </a></h2>
+<h3 id="Step-3-:-Cria&#231;&#227;o-do-modelo-de-Regress&#227;o-Linear">Step 3 : Cria&#231;&#227;o do modelo de Regress&#227;o Linear<a class="anchor-link" href="#Step-3-:-Cria&#231;&#227;o-do-modelo-de-Regress&#227;o-Linear"> </a></h3>
 </div>
 </div>
 </div>
@@ -1176,7 +1191,7 @@ Input columns :  [&#39;Summary&#39;, &#39;Precip Type&#39;, &#39;Apparent Temper
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Step-4-:-Treinamento-do-modelo">Step 4 : Treinamento do modelo<a class="anchor-link" href="#Step-4-:-Treinamento-do-modelo"> </a></h2>
+<h3 id="Step-4-:-Treinamento-do-modelo">Step 4 : Treinamento do modelo<a class="anchor-link" href="#Step-4-:-Treinamento-do-modelo"> </a></h3>
 </div>
 </div>
 </div>
@@ -1401,7 +1416,7 @@ Epoch [100], val_loss: 7.7381
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Step-5-:-Avalia&#231;&#227;o-do-Modelo-e-Predi&#231;&#227;o">Step 5 : Avalia&#231;&#227;o do Modelo e Predi&#231;&#227;o<a class="anchor-link" href="#Step-5-:-Avalia&#231;&#227;o-do-Modelo-e-Predi&#231;&#227;o"> </a></h2>
+<h3 id="Step-5-:-Avalia&#231;&#227;o-do-Modelo-e-Predi&#231;&#227;o">Step 5 : Avalia&#231;&#227;o do Modelo e Predi&#231;&#227;o<a class="anchor-link" href="#Step-5-:-Avalia&#231;&#227;o-do-Modelo-e-Predi&#231;&#227;o"> </a></h3>
 </div>
 </div>
 </div>
