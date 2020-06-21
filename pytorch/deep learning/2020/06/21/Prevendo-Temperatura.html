@@ -6,7 +6,6 @@
 <title>Prevendo Temperatura | Bruno de Abreu Machado</title>
 <meta name="generator" content="Jekyll v4.0.0" />
 <meta property="og:title" content="Prevendo Temperatura" />
-<meta name="author" content="Bruno de Abreu Machado" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Utilizando PyTorch crio uma rede neural simples para tentar realizar a predição de temperatura com dados do oceno, neste notebook/post explico cada etapa do processo de criação de uma rede neural simples com base no conteúdo aprendido no curso de Deep Learning with PyTorch: Zero to GANs, oferecido pela @freeCodeCamp junto com @JovianML" />
 <meta property="og:description" content="Utilizando PyTorch crio uma rede neural simples para tentar realizar a predição de temperatura com dados do oceno, neste notebook/post explico cada etapa do processo de criação de uma rede neural simples com base no conteúdo aprendido no curso de Deep Learning with PyTorch: Zero to GANs, oferecido pela @freeCodeCamp junto com @JovianML" />
@@ -16,13 +15,12 @@
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-06-21T00:00:00-05:00" />
 <script type="application/ld+json">
-{"author":{"@type":"Person","name":"Bruno de Abreu Machado"},"description":"Utilizando PyTorch crio uma rede neural simples para tentar realizar a predição de temperatura com dados do oceno, neste notebook/post explico cada etapa do processo de criação de uma rede neural simples com base no conteúdo aprendido no curso de Deep Learning with PyTorch: Zero to GANs, oferecido pela @freeCodeCamp junto com @JovianML","@type":"BlogPosting","headline":"Prevendo Temperatura","url":"https://brunodeabreu.github.io/blog/pytorch/deep%20learning/2020/06/21/Prevendo-Temperatura.html","datePublished":"2020-06-21T00:00:00-05:00","dateModified":"2020-06-21T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://brunodeabreu.github.io/blog/pytorch/deep%20learning/2020/06/21/Prevendo-Temperatura.html"},"@context":"https://schema.org"}</script>
+{"description":"Utilizando PyTorch crio uma rede neural simples para tentar realizar a predição de temperatura com dados do oceno, neste notebook/post explico cada etapa do processo de criação de uma rede neural simples com base no conteúdo aprendido no curso de Deep Learning with PyTorch: Zero to GANs, oferecido pela @freeCodeCamp junto com @JovianML","@type":"BlogPosting","headline":"Prevendo Temperatura","url":"https://brunodeabreu.github.io/blog/pytorch/deep%20learning/2020/06/21/Prevendo-Temperatura.html","datePublished":"2020-06-21T00:00:00-05:00","dateModified":"2020-06-21T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://brunodeabreu.github.io/blog/pytorch/deep%20learning/2020/06/21/Prevendo-Temperatura.html"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://brunodeabreu.github.io/blog/feed.xml" title="Bruno de Abreu Machado" /><link rel="shortcut icon" type="image/x-icon" href="/blog/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
 <title>Prevendo Temperatura | Bruno de Abreu Machado</title>
 <meta name="generator" content="Jekyll v4.0.0" />
 <meta property="og:title" content="Prevendo Temperatura" />
-<meta name="author" content="Bruno de Abreu Machado" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Utilizando PyTorch crio uma rede neural simples para tentar realizar a predição de temperatura com dados do oceno, neste notebook/post explico cada etapa do processo de criação de uma rede neural simples com base no conteúdo aprendido no curso de Deep Learning with PyTorch: Zero to GANs, oferecido pela @freeCodeCamp junto com @JovianML" />
 <meta property="og:description" content="Utilizando PyTorch crio uma rede neural simples para tentar realizar a predição de temperatura com dados do oceno, neste notebook/post explico cada etapa do processo de criação de uma rede neural simples com base no conteúdo aprendido no curso de Deep Learning with PyTorch: Zero to GANs, oferecido pela @freeCodeCamp junto com @JovianML" />
@@ -32,7 +30,7 @@
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-06-21T00:00:00-05:00" />
 <script type="application/ld+json">
-{"author":{"@type":"Person","name":"Bruno de Abreu Machado"},"description":"Utilizando PyTorch crio uma rede neural simples para tentar realizar a predição de temperatura com dados do oceno, neste notebook/post explico cada etapa do processo de criação de uma rede neural simples com base no conteúdo aprendido no curso de Deep Learning with PyTorch: Zero to GANs, oferecido pela @freeCodeCamp junto com @JovianML","@type":"BlogPosting","headline":"Prevendo Temperatura","url":"https://brunodeabreu.github.io/blog/pytorch/deep%20learning/2020/06/21/Prevendo-Temperatura.html","datePublished":"2020-06-21T00:00:00-05:00","dateModified":"2020-06-21T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://brunodeabreu.github.io/blog/pytorch/deep%20learning/2020/06/21/Prevendo-Temperatura.html"},"@context":"https://schema.org"}</script>
+{"description":"Utilizando PyTorch crio uma rede neural simples para tentar realizar a predição de temperatura com dados do oceno, neste notebook/post explico cada etapa do processo de criação de uma rede neural simples com base no conteúdo aprendido no curso de Deep Learning with PyTorch: Zero to GANs, oferecido pela @freeCodeCamp junto com @JovianML","@type":"BlogPosting","headline":"Prevendo Temperatura","url":"https://brunodeabreu.github.io/blog/pytorch/deep%20learning/2020/06/21/Prevendo-Temperatura.html","datePublished":"2020-06-21T00:00:00-05:00","dateModified":"2020-06-21T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://brunodeabreu.github.io/blog/pytorch/deep%20learning/2020/06/21/Prevendo-Temperatura.html"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 <link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
@@ -89,9 +87,7 @@ window.onload = wrap_img;
   <header class="post-header">
     <h1 class="post-title p-name" itemprop="name headline">Prevendo Temperatura</h1><p class="page-description">Utilizando PyTorch crio uma rede neural simples para tentar realizar a predição de temperatura com dados do oceno, neste notebook/post explico cada etapa do processo de criação de uma rede neural simples com base no conteúdo aprendido no curso  de Deep Learning with PyTorch: Zero to GANs, oferecido pela @freeCodeCamp junto com @JovianML</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-06-21T00:00:00-05:00" itemprop="datePublished">
         Jun 21, 2020
-      </time>• 
-          <span itemprop="author" itemscope itemtype="http://schema.org/Person">
-            <span class="p-author h-card" itemprop="name">Bruno de Abreu Machado</span></span>
+      </time>
        • <span class="read-time" title="Estimated read time">
     
     
