@@ -37,7 +37,7 @@ function wrap_img(fn) {
     if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
         var elements = document.querySelectorAll(".post img");
         Array.prototype.forEach.call(elements, function(el, i) {
-            if (el.getAttribute("title")) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
                 const caption = document.createElement('figcaption');
                 var node = document.createTextNode(el.getAttribute("title"));
                 caption.appendChild(node);
@@ -92,16 +92,28 @@ window.onload = wrap_img;
 
   <!-- Hide posts if front matter flag hide:true -->
   
+  
+
+  <!-- Sort posts by rank, then date -->
+  
+  
+  
+
+ 
+  
+
+   <!-- Assemble final sorted posts array -->
+  
   <ul class="post-list"><li><h3>
-    <a class="post-link" href="/blog/2020/06/21/2020-06-21-Prevendo-Temperatura.html">
-    
+    <a class="post-link" href="/blog/pytorch/deep%20learning/2020/06/21/Prevendo-Temperatura.html">
+    Prevendo Temperatura
     </a>
-</h3><p class="post-meta">Jun 21, 2020</p>
+</h3><p class="post-meta-description">Utilizando PyTorch crio uma rede neural simples para tentar realizar a predição de temperatura com dados do oceno, neste notebook/post explico cada etapa do processo de criação de uma rede neural simples com base no conteúdo aprendido no curso  de Deep Learning with PyTorch: Zero to GANs, oferecido pela @freeCodeCamp junto com @JovianML</p><p class="post-meta">Jun 21, 2020</p>
 </li><li><h3>
     <a class="post-link" href="/blog/pytorch/deep%20learning/2020/06/14/Descobrindo-5-Funcoes-Pytorch.html">
     Descobrindo 5 funções no Pytorch
     </a>
-</h3><p class="post-meta-description"> Recentimente iniciei um curso de Deep Learning pela oferecido pela @freeCodeCamp junto com @JovianML apresentado pelo @aakashns um brilhante instrutor, são seis semanas de curso Zero to GANS. Neste primeiro artigo exploro 5 funções que não conhecia no Pytorch, criando exemplos de aplicações utilizando cada função.</p><p class="post-meta">Jun 14, 2020</p>
+</h3><p class="post-meta-description">Recentimente iniciei um curso de Deep Learning pela oferecido pela @freeCodeCamp junto com @JovianML apresentado pelo @aakashns um brilhante instrutor, são seis semanas de curso Zero to GANS. Neste primeiro artigo exploro 5 funções que não conhecia no Pytorch, criando exemplos de aplicações utilizando cada função.</p><p class="post-meta">Jun 14, 2020</p>
 </li><li><h3>
     <a class="post-link" href="/blog/jupyter/2020/03/29/Doacao-Sangue.html">
     Doar Sangue salva vidas
