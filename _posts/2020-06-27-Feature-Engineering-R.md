@@ -1,15 +1,12 @@
-
 ---
 title: "Features Engineering com Variáveis Categóricas"
 description: "Neste post compartilho técnicas de feature engineering com variáveis categóricas no R, conteúdo do curso de Machine Learning da Data Science Academy"
 layout: post
-toc: true
+toc: false
 comments: true
 hide: false
 search_exclude: true
 categories: [R, Feature Enegineering]
-metadata_key1: metadata_value1
-metadata_key2: metadata_value2
 ---
 
 
@@ -27,7 +24,7 @@ Ao realizar Features Engineering é uma oportunidade de olhar para os dados de f
 
 ### Bibliotecas
 
-```{r}
+```
 #install.packages("dplyr")
 #install.packages("ggplot2")
 #install.packages(caret)
@@ -41,7 +38,7 @@ library(caret)
 
 ### Download Dataset
 
-```{r}
+```
 tempdl <- tempfile()
 
 baseURL <- 'https://archive.ics.uci.edu/ml/machine-learning-databases/00222/bank.zip'
@@ -55,7 +52,7 @@ download.file(baseURL, tempdl, mode = 'wb' )
 ### Lendo o Dataset
  - Utilizando read.table
  
-```{r}
+```
 
 unzip(tempdl, 'bank-full.csv')
 
@@ -68,12 +65,12 @@ head(dataset_bank)
 Baseado na coluna *job* criar uma coluna relacionado o nível de conhecimento em tecnologia
 
 
-```{r}
+```
 table(dataset_bank$job)
 
 ```
 
-```{r}
+```
 dataset_bank %>%
   group_by(job)%>%
   summarise(n = n())%>%
@@ -86,7 +83,7 @@ Utilizando **Mutate** do dplyr é possível atribuir uma coluna ao dataset com b
 
 Como isso acrescentamos uma informação ao conjunto de dados que pode ser importante analise
 
-```{r}
+```
 
 dataset_bank <- dataset_bank %>%
   mutate(technology_use = 
@@ -108,7 +105,7 @@ head(dataset_bank$technology_use)
 
 Verificando a proporçãodo nível de  conhecimento em tecnolocia, utilizando `round`, `prop.table`
 
-```{r}
+```
 round(prop.table(table(dataset_bank$technology_use)), 2)
 ```
 
@@ -116,7 +113,7 @@ round(prop.table(table(dataset_bank$technology_use)), 2)
 
 Neste dataset a coluna default apresenta um padrão **yes** ou **no** para melhor utilização é recomendável que se transforme em 0 ou 1 .
 
-```{r}
+```
 dataset_bank <- dataset_bank %>%
   mutate( defaulted = ifelse(default == 'yes', 1 , 0))
 
@@ -127,13 +124,13 @@ dataset_bank <- dataset_bank %>%
 
 Neste bloco de código utilzando o pacote `caret` é feita a conversão de todas as variáveis categóricas do dataset e armazenado em um segundo dataset chamado `bank.dummies`
 
-```{r}
+```
 dmy <- dummyVars(' ~ .', data=dataset_bank)
 bank.dummies <- data.frame(predict(dmy, newdata= dataset_bank))
 ```
 
 **Analisando os dados do novo dataset**
-```{r}
+```
 str(bank.dummies)
 ```
 
@@ -141,7 +138,7 @@ str(bank.dummies)
 
 Realizando o agrupamento de duas variáveis
 
-```{r}
+```
 dataset_bank %>%
   group_by(job, marital) %>%
   summarise(n = n())
@@ -151,7 +148,7 @@ dataset_bank %>%
 
 **Visualizando os dados em um gráfico**
 
-```{r}
+```
 dataset_bank %>%
   group_by(job, marital)%>%
   summarise(n = n())%>%
