@@ -1,14 +1,16 @@
 
-# "Features Engineering com Variáveis Categóricas"
-
-> Neste post compartilho técnicas de feature engineering com variáveis categóricas no R, conteúdo do curso de Machine Learning da Data Science Academy
-
-- toc:true- branch: master
-- badges: true
-- comments: true
-- categories: [R, Feature Enegineering]
-
-
+---
+title: "Features Engineering com Variáveis Categóricas"
+description: "Neste post compartilho técnicas de feature engineering com variáveis categóricas no R, conteúdo do curso de Machine Learning da Data Science Academy"
+layout: post
+toc: false
+comments: true
+hide: false
+search_exclude: true
+categories: [R, Feature Enegineering]
+metadata_key1: metadata_value1
+metadata_key2: metadata_value2
+---
 
 
 
