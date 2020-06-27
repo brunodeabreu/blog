@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://brunodeabreu.github.io/blog/feed.xml" rel="self" type="application/atom+xml" /><link href="https://brunodeabreu.github.io/blog/" rel="alternate" type="text/html" /><updated>2020-06-27T15:29:25-05:00</updated><id>https://brunodeabreu.github.io/blog/feed.xml</id><title type="html">Bruno de Abreu Machado</title><subtitle>Compartilhando anotações sobre Data Science e AI, anotações de cursos, notebooks de projetos, etc.</subtitle><entry><title type="html">Features Engineering com Variáveis Categóricas</title><link href="https://brunodeabreu.github.io/blog/r/feature%20enegineering/2020/06/27/Feature-Engineering-R.html" rel="alternate" type="text/html" title="Features Engineering com Variáveis Categóricas" /><published>2020-06-27T00:00:00-05:00</published><updated>2020-06-27T00:00:00-05:00</updated><id>https://brunodeabreu.github.io/blog/r/feature%20enegineering/2020/06/27/Feature-Engineering-R</id><content type="html" xml:base="https://brunodeabreu.github.io/blog/r/feature%20enegineering/2020/06/27/Feature-Engineering-R.html">&lt;p&gt;Normalmente modelos de machine learning tem dificuldade de trabalhar com dados em formato texto, com tećnicas de feature engineering buscamos alternativas de representar a informação da variável categórica de forma númerica, sem perder o teor ou informação, esta tem que ser a mesma.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://brunodeabreu.github.io/blog/feed.xml" rel="self" type="application/atom+xml" /><link href="https://brunodeabreu.github.io/blog/" rel="alternate" type="text/html" /><updated>2020-06-27T15:38:26-05:00</updated><id>https://brunodeabreu.github.io/blog/feed.xml</id><title type="html">Bruno de Abreu Machado</title><subtitle>Compartilhando anotações sobre Data Science e AI, anotações de cursos, notebooks de projetos, etc.</subtitle><entry><title type="html">Feature Engineering com Variáveis Categóricas</title><link href="https://brunodeabreu.github.io/blog/r/feature%20enegineering/2020/06/27/Feature-Engineering-R.html" rel="alternate" type="text/html" title="Feature Engineering com Variáveis Categóricas" /><published>2020-06-27T00:00:00-05:00</published><updated>2020-06-27T00:00:00-05:00</updated><id>https://brunodeabreu.github.io/blog/r/feature%20enegineering/2020/06/27/Feature-Engineering-R</id><content type="html" xml:base="https://brunodeabreu.github.io/blog/r/feature%20enegineering/2020/06/27/Feature-Engineering-R.html">&lt;p&gt;Normalmente modelos de machine learning tem dificuldade de trabalhar com dados em formato texto, com tećnicas de feature engineering buscamos alternativas de representar a informação da variável categórica de forma númerica, sem perder o teor ou informação, esta tem que ser a mesma.&lt;/p&gt;
 
 &lt;p&gt;Ao realizar Features Engineering é uma oportunidade de olhar para os dados de forma diferente, é importante separar o conceito de &lt;em&gt;data wrangling&lt;/em&gt; (remover missing &lt;em&gt;NAs&lt;/em&gt;, alterar variáveis, limpeza de dados) do conceito de &lt;em&gt;feature engineering&lt;/em&gt; que é relacionado a alteração das variáveis para melhorar a forma de apresentação ou usabilidade.&lt;/p&gt;
 
@@ -56,7 +56,7 @@ head(dataset_bank)
   geom_bar(stat = 'identity')+
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;&lt;img src=&quot;2020-06-27/graf1.png&quot; alt=&quot;Gráfico 1&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;images/graf1.png&quot; alt=&quot;Gráfico 1&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Utilizando &lt;strong&gt;Mutate&lt;/strong&gt; do dplyr é possível atribuir uma coluna ao dataset com base no conhecimento de cada job&lt;/p&gt;
 
@@ -126,7 +126,7 @@ bank.dummies &amp;lt;- data.frame(predict(dmy, newdata= dataset_bank))
   geom_bar(stat = 'identity', position='dodge')+
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;&lt;img src=&quot;2020-06-27/graf2.png&quot; alt=&quot;Gráfico 2&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;images/graf2.png&quot; alt=&quot;Gráfico 2&quot; /&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;conclusão&quot;&gt;Conclusão&lt;/h3&gt;
 
