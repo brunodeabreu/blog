@@ -1,7 +1,17 @@
----
-title: "Features Engineering com Variáveis Categóricas"
-output: html_notebook
----
+
+# "Features Engineering com Variáveis Categóricas"
+
+> Neste post compartilho técnicas de feature engineering com variáveis categóricas no R, conteúdo do curso de Machine Learning da Data Science Academy
+
+- toc:true- branch: master
+- badges: true
+- comments: true
+- categories: [R, Feature Enegineering]
+
+
+
+
+
 
 Normalmente modelos de machine learning tem dificuldade de trabalhar com dados em formato texto, com tećnicas de feature engineering buscamos alternativas de representar a informação da variável categórica de forma númerica, sem perder o teor ou informação, esta tem que ser a mesma.
 
