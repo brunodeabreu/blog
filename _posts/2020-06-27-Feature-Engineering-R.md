@@ -159,8 +159,7 @@ dataset_bank %>%
   geom_bar(stat = 'identity', position='dodge')+
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
 ```
-![Gráfico 2](./img/graf2.png)
-
+![Gráfico 2]({{site.baseurl}}/images/graf2.png "Gráfico 2")
 
 ### Conclusão
 
