@@ -79,7 +79,7 @@ dataset_bank %>%
   geom_bar(stat = 'identity')+
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
 ```
-![](img/graf1.png)
+![Gráfico 1](../img/graf1.png)
 
 
 Utilizando **Mutate** do dplyr é possível atribuir uma coluna ao dataset com base no conhecimento de cada job
@@ -159,7 +159,7 @@ dataset_bank %>%
   geom_bar(stat = 'identity', position='dodge')+
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
 ```
-![](img/graf2.png)
+![Gráfico 2](./img/graf2.png)
 
 
 ### Conclusão
