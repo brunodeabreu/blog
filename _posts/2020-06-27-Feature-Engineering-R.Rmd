@@ -3,7 +3,7 @@
 title: "Features Engineering com Variáveis Categóricas"
 description: "Neste post compartilho técnicas de feature engineering com variáveis categóricas no R, conteúdo do curso de Machine Learning da Data Science Academy"
 layout: post
-toc: false
+toc: true
 comments: true
 hide: false
 search_exclude: true
