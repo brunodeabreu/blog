@@ -1,33 +1,15 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://brunodeabreu.github.io/blog/feed.xml" rel="self" type="application/atom+xml" /><link href="https://brunodeabreu.github.io/blog/" rel="alternate" type="text/html" /><updated>2020-06-27T14:52:00-05:00</updated><id>https://brunodeabreu.github.io/blog/feed.xml</id><title type="html">Bruno de Abreu Machado</title><subtitle>Compartilhando anotações sobre Data Science e AI, anotações de cursos, notebooks de projetos, etc.</subtitle><entry><title type="html">Feature Engineering R</title><link href="https://brunodeabreu.github.io/blog/2020/06/27/Feature-Engineering-R.Rmd" rel="alternate" type="text/html" title="Feature Engineering R" /><published>2020-06-27T00:00:00-05:00</published><updated>2020-06-27T00:00:00-05:00</updated><id>https://brunodeabreu.github.io/blog/2020/06/27/Feature-Engineering-R</id><content type="html" xml:base="https://brunodeabreu.github.io/blog/2020/06/27/Feature-Engineering-R.Rmd">---
-title: &quot;Features Engineering com Variáveis Categóricas&quot;
-description: &quot;Neste post compartilho técnicas de feature engineering com variáveis categóricas no R, conteúdo do curso de Machine Learning da Data Science Academy&quot;
-layout: post
-toc: true
-comments: true
-hide: false
-search_exclude: true
-categories: [R, Feature Enegineering]
-metadata_key1: metadata_value1
-metadata_key2: metadata_value2
----
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://brunodeabreu.github.io/blog/feed.xml" rel="self" type="application/atom+xml" /><link href="https://brunodeabreu.github.io/blog/" rel="alternate" type="text/html" /><updated>2020-06-27T14:56:49-05:00</updated><id>https://brunodeabreu.github.io/blog/feed.xml</id><title type="html">Bruno de Abreu Machado</title><subtitle>Compartilhando anotações sobre Data Science e AI, anotações de cursos, notebooks de projetos, etc.</subtitle><entry><title type="html">Features Engineering com Variáveis Categóricas</title><link href="https://brunodeabreu.github.io/blog/r/feature%20enegineering/2020/06/27/Feature-Engineering-R.html" rel="alternate" type="text/html" title="Features Engineering com Variáveis Categóricas" /><published>2020-06-27T00:00:00-05:00</published><updated>2020-06-27T00:00:00-05:00</updated><id>https://brunodeabreu.github.io/blog/r/feature%20enegineering/2020/06/27/Feature-Engineering-R</id><content type="html" xml:base="https://brunodeabreu.github.io/blog/r/feature%20enegineering/2020/06/27/Feature-Engineering-R.html">&lt;p&gt;Normalmente modelos de machine learning tem dificuldade de trabalhar com dados em formato texto, com tećnicas de feature engineering buscamos alternativas de representar a informação da variável categórica de forma númerica, sem perder o teor ou informação, esta tem que ser a mesma.&lt;/p&gt;
 
+&lt;p&gt;Ao realizar Features Engineering é uma oportunidade de olhar para os dados de forma diferente, é importante separar o conceito de &lt;em&gt;data wrangling&lt;/em&gt; (remover missing &lt;em&gt;NAs&lt;/em&gt;, alterar variáveis, limpeza de dados) do conceito de &lt;em&gt;feature engineering&lt;/em&gt; que é relacionado a alteração das variáveis para melhorar a forma de apresentação ou usabilidade.&lt;/p&gt;
 
+&lt;p&gt;&lt;strong&gt;Fonte de Dados&lt;/strong&gt;
+&lt;a href=&quot;https://archive.ics.uci.edu/ml/machine-learning-databases/00222/bank.zip&quot;&gt;UCI Back Marketing Data set&lt;/a&gt;&lt;/p&gt;
 
+&lt;p&gt;&lt;a href=&quot;https://archive.ics.uci.edu/ml/datasets/bank+marketing&quot;&gt;UCI Info&lt;/a&gt;&lt;/p&gt;
 
-Normalmente modelos de machine learning tem dificuldade de trabalhar com dados em formato texto, com tećnicas de feature engineering buscamos alternativas de representar a informação da variável categórica de forma númerica, sem perder o teor ou informação, esta tem que ser a mesma.
+&lt;h3 id=&quot;bibliotecas&quot;&gt;Bibliotecas&lt;/h3&gt;
 
-Ao realizar Features Engineering é uma oportunidade de olhar para os dados de forma diferente, é importante separar o conceito de *data wrangling* (remover missing *NAs*, alterar variáveis, limpeza de dados) do conceito de *feature engineering* que é relacionado a alteração das variáveis para melhorar a forma de apresentação ou usabilidade.
-
-**Fonte de Dados**
-[UCI Back Marketing Data set](https://archive.ics.uci.edu/ml/machine-learning-databases/00222/bank.zip)
-
-[UCI Info](https://archive.ics.uci.edu/ml/datasets/bank+marketing)
-
-
-### Bibliotecas
-
-```{r}
-#install.packages(&quot;dplyr&quot;)
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#install.packages(&quot;dplyr&quot;)
 #install.packages(&quot;ggplot2&quot;)
 #install.packages(caret)
 
@@ -35,59 +17,52 @@ library(dplyr)
 library(ggplot2)
 library(caret)
 
-```
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
+&lt;h3 id=&quot;download-dataset&quot;&gt;Download Dataset&lt;/h3&gt;
 
-### Download Dataset
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;tempdl &amp;lt;- tempfile()
 
-```{r}
-tempdl &lt;- tempfile()
-
-baseURL &lt;- 'https://archive.ics.uci.edu/ml/machine-learning-databases/00222/bank.zip'
+baseURL &amp;lt;- 'https://archive.ics.uci.edu/ml/machine-learning-databases/00222/bank.zip'
 
 download.file(baseURL, tempdl, mode = 'wb' )
 
-```
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
+&lt;h3 id=&quot;lendo-o-dataset&quot;&gt;Lendo o Dataset&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;Utilizando read.table&lt;/li&gt;
+&lt;/ul&gt;
 
-
-### Lendo o Dataset
- - Utilizando read.table
- 
-```{r}
-
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
 unzip(tempdl, 'bank-full.csv')
 
-dataset_bank &lt;- read.table('bank-full.csv', header = TRUE, sep=';')
+dataset_bank &amp;lt;- read.table('bank-full.csv', header = TRUE, sep=';')
 head(dataset_bank)
-```
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-### Adicionando uma coluna
+&lt;h3 id=&quot;adicionando-uma-coluna&quot;&gt;Adicionando uma coluna&lt;/h3&gt;
 
-Baseado na coluna *job* criar uma coluna relacionado o nível de conhecimento em tecnologia
+&lt;p&gt;Baseado na coluna &lt;em&gt;job&lt;/em&gt; criar uma coluna relacionado o nível de conhecimento em tecnologia&lt;/p&gt;
 
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;table(dataset_bank$job)
 
-```{r}
-table(dataset_bank$job)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-```
-
-```{r}
-dataset_bank %&gt;%
-  group_by(job)%&gt;%
-  summarise(n = n())%&gt;%
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;dataset_bank %&amp;gt;%
+  group_by(job)%&amp;gt;%
+  summarise(n = n())%&amp;gt;%
   ggplot(aes(x = job, y=n)) + 
   geom_bar(stat = 'identity')+
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
-```
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-Utilizando **Mutate** do dplyr é possível atribuir uma coluna ao dataset com base no conhecimento de cada job
+&lt;p&gt;Utilizando &lt;strong&gt;Mutate&lt;/strong&gt; do dplyr é possível atribuir uma coluna ao dataset com base no conhecimento de cada job&lt;/p&gt;
 
-Como isso acrescentamos uma informação ao conjunto de dados que pode ser importante analise
+&lt;p&gt;Como isso acrescentamos uma informação ao conjunto de dados que pode ser importante analise&lt;/p&gt;
 
-```{r}
-
-dataset_bank &lt;- dataset_bank %&gt;%
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+dataset_bank &amp;lt;- dataset_bank %&amp;gt;%
   mutate(technology_use = 
            case_when(job == 'admin' ~ 'medio',
                      job == 'blue-collar' ~ 'baixo',
@@ -103,65 +78,57 @@ dataset_bank &lt;- dataset_bank %&gt;%
                      job == 'unknown' ~ 'baixo'))
 
 head(dataset_bank$technology_use)
-```
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-Verificando a proporçãodo nível de  conhecimento em tecnolocia, utilizando `round`, `prop.table`
+&lt;p&gt;Verificando a proporçãodo nível de  conhecimento em tecnolocia, utilizando &lt;code class=&quot;highlighter-rouge&quot;&gt;round&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;prop.table&lt;/code&gt;&lt;/p&gt;
 
-```{r}
-round(prop.table(table(dataset_bank$technology_use)), 2)
-```
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;round(prop.table(table(dataset_bank$technology_use)), 2)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-### Criando uma variáveis Dummies
+&lt;h3 id=&quot;criando-uma-variáveis-dummies&quot;&gt;Criando uma variáveis Dummies&lt;/h3&gt;
 
-Neste dataset a coluna default apresenta um padrão **yes** ou **no** para melhor utilização é recomendável que se transforme em 0 ou 1 .
+&lt;p&gt;Neste dataset a coluna default apresenta um padrão &lt;strong&gt;yes&lt;/strong&gt; ou &lt;strong&gt;no&lt;/strong&gt; para melhor utilização é recomendável que se transforme em 0 ou 1 .&lt;/p&gt;
 
-```{r}
-dataset_bank &lt;- dataset_bank %&gt;%
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;dataset_bank &amp;lt;- dataset_bank %&amp;gt;%
   mutate( defaulted = ifelse(default == 'yes', 1 , 0))
 
-```
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
+&lt;h3 id=&quot;one-hot-encoding&quot;&gt;One-Hot Encoding&lt;/h3&gt;
 
-### One-Hot Encoding
+&lt;p&gt;Neste bloco de código utilzando o pacote &lt;code class=&quot;highlighter-rouge&quot;&gt;caret&lt;/code&gt; é feita a conversão de todas as variáveis categóricas do dataset e armazenado em um segundo dataset chamado &lt;code class=&quot;highlighter-rouge&quot;&gt;bank.dummies&lt;/code&gt;&lt;/p&gt;
 
-Neste bloco de código utilzando o pacote `caret` é feita a conversão de todas as variáveis categóricas do dataset e armazenado em um segundo dataset chamado `bank.dummies`
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;dmy &amp;lt;- dummyVars(' ~ .', data=dataset_bank)
+bank.dummies &amp;lt;- data.frame(predict(dmy, newdata= dataset_bank))
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-```{r}
-dmy &lt;- dummyVars(' ~ .', data=dataset_bank)
-bank.dummies &lt;- data.frame(predict(dmy, newdata= dataset_bank))
-```
+&lt;p&gt;&lt;strong&gt;Analisando os dados do novo dataset&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;str(bank.dummies)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-**Analisando os dados do novo dataset**
-```{r}
-str(bank.dummies)
-```
+&lt;h3 id=&quot;combinação-de-atributos&quot;&gt;Combinação de atributos&lt;/h3&gt;
 
-### Combinação de atributos
+&lt;p&gt;Realizando o agrupamento de duas variáveis&lt;/p&gt;
 
-Realizando o agrupamento de duas variáveis
-
-```{r}
-dataset_bank %&gt;%
-  group_by(job, marital) %&gt;%
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;dataset_bank %&amp;gt;%
+  group_by(job, marital) %&amp;gt;%
   summarise(n = n())
 
-```
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
+&lt;p&gt;&lt;strong&gt;Visualizando os dados em um gráfico&lt;/strong&gt;&lt;/p&gt;
 
-**Visualizando os dados em um gráfico**
-
-```{r}
-dataset_bank %&gt;%
-  group_by(job, marital)%&gt;%
-  summarise(n = n())%&gt;%
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;dataset_bank %&amp;gt;%
+  group_by(job, marital)%&amp;gt;%
+  summarise(n = n())%&amp;gt;%
   ggplot(aes(x = job, y=n , fill=marital))+
   geom_bar(stat = 'identity', position='dodge')+
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
-```
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-### Conclusão
+&lt;h3 id=&quot;conclusão&quot;&gt;Conclusão&lt;/h3&gt;
 
-Este doc é parte de um excelente curso de Machine Learning da  [Data Science Academy](https://www.datascienceacademy.com.br/start), Cap 02, estudo de caso em R apresentando técnicas de feature engineering.</content><author><name></name></author><summary type="html">--- title: &quot;Features Engineering com Variáveis Categóricas&quot; description: &quot;Neste post compartilho técnicas de feature engineering com variáveis categóricas no R, conteúdo do curso de Machine Learning da Data Science Academy&quot; layout: post toc: true comments: true hide: false search_exclude: true categories: [R, Feature Enegineering] metadata_key1: metadata_value1 metadata_key2: metadata_value2 ---</summary></entry><entry><title type="html">Prevendo Temperatura com PyTorch utilizando simples NN</title><link href="https://brunodeabreu.github.io/blog/pytorch/deep%20learning/2020/06/21/Prevendo-Temperatura.html" rel="alternate" type="text/html" title="Prevendo Temperatura com PyTorch utilizando simples NN" /><published>2020-06-21T00:00:00-05:00</published><updated>2020-06-21T00:00:00-05:00</updated><id>https://brunodeabreu.github.io/blog/pytorch/deep%20learning/2020/06/21/Prevendo-Temperatura</id><content type="html" xml:base="https://brunodeabreu.github.io/blog/pytorch/deep%20learning/2020/06/21/Prevendo-Temperatura.html">&lt;!--
+&lt;p&gt;Este doc é parte de um excelente curso de Machine Learning da  &lt;a href=&quot;https://www.datascienceacademy.com.br/start&quot;&gt;Data Science Academy&lt;/a&gt;, Cap 02, estudo de caso em R apresentando técnicas de feature engineering.&lt;/p&gt;</content><author><name></name></author><summary type="html">Normalmente modelos de machine learning tem dificuldade de trabalhar com dados em formato texto, com tećnicas de feature engineering buscamos alternativas de representar a informação da variável categórica de forma númerica, sem perder o teor ou informação, esta tem que ser a mesma.</summary></entry><entry><title type="html">Prevendo Temperatura com PyTorch utilizando simples NN</title><link href="https://brunodeabreu.github.io/blog/pytorch/deep%20learning/2020/06/21/Prevendo-Temperatura.html" rel="alternate" type="text/html" title="Prevendo Temperatura com PyTorch utilizando simples NN" /><published>2020-06-21T00:00:00-05:00</published><updated>2020-06-21T00:00:00-05:00</updated><id>https://brunodeabreu.github.io/blog/pytorch/deep%20learning/2020/06/21/Prevendo-Temperatura</id><content type="html" xml:base="https://brunodeabreu.github.io/blog/pytorch/deep%20learning/2020/06/21/Prevendo-Temperatura.html">&lt;!--
 #################################################
 ### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
 #################################################
