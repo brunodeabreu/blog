@@ -7,7 +7,7 @@ comments: true
 hide: false
 search_exclude: true
 categories: [R, Feature Enegineering]
-image: images/R/2020-06-27/graf2.png
+image: images/graf2.png
 ---
 
 
